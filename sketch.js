@@ -20,11 +20,12 @@ let disposalBinImage;
 
 let startButton; // only for this version
 
+//images moved out images here, organized into image folder on project 1 website
 function preload() {
-  compostBinImage = loadImage('images/compostopened.png');
-  recyclingBinImage = loadImage('images/recyclingopened.png');
-  donationBinImage = loadImage('images/donationopened.png');
-  disposalBinImage = loadImage('images/disposalopened.png');
+  compostBinImage = loadImage('compostopened.png');
+  recyclingBinImage = loadImage('recyclingopened.png');
+  donationBinImage = loadImage('donationopened.png');
+  disposalBinImage = loadImage('disposalopened.png');
 }
 
 function setup() {
