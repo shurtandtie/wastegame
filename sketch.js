@@ -72,13 +72,22 @@ function draw() {
       fill(0);
       textSize(32);
       text("Game Over", width / 2, height / 2 - 30);
+
+      // only for this version
+      textSize(24);
+      text(`Your Score: ${score} out of 100`, width / 2, height / 2 + 20);
+      const replay = window.confirm("Do you want to try again?");
+      if (replay) {
+        restartGame();
+      }
     }
   } else {
-    displayStartButton() //only necessary since this isn't on the wepage
+    displayStartButton();
     displayInstructions();
   }
   displayBins();
 }
+
 
 //only necessary since this isn't on the wepage
 function displayStartButton() {
@@ -87,6 +96,25 @@ function displayStartButton() {
   fill(42, 96, 65); 
   textSize(24);
   text("Play", width / 2, height / 2);
+}
+
+//only necessary since this isn't on the wepage
+function restartGame() {
+  boxes = [];
+  score = 0;
+  gameStarted = false;
+  selectedBox = null;
+  currentBoxIndex = 0;
+  createBoxes();
+  createLabels();
+
+  // Recreate the start button
+  startButton = createButton('');
+  startButton.position(width / 2 - 50, height / 2 - 25);
+  startButton.size(100, 50);
+  startButton.style('background-color', 'rgba(0, 0, 0, 0)');
+  startButton.style('border', 'none');
+  startButton.mousePressed(startGame);
 }
 
 //sets randomize boxes
