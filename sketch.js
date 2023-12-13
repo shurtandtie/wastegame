@@ -78,7 +78,7 @@ function draw() {
       text(`Your Score: ${score} out of 100`, width / 2, height / 2 + 20);
       const replay = window.confirm("Do you want to try again?");
       if (replay) {
-        restartGame();
+        window.location.reload();
       }
     }
   } else {
@@ -96,25 +96,6 @@ function displayStartButton() {
   fill(42, 96, 65); 
   textSize(24);
   text("Play", width / 2, height / 2);
-}
-
-//only necessary since this isn't on the wepage
-function restartGame() {
-  boxes = [];
-  score = 0;
-  gameStarted = false;
-  selectedBox = null;
-  currentBoxIndex = 0;
-  createBoxes();
-  createLabels();
-
-  // Recreate the start button
-  startButton = createButton('');
-  startButton.position(width / 2 - 50, height / 2 - 25);
-  startButton.size(100, 50);
-  startButton.style('background-color', 'rgba(0, 0, 0, 0)');
-  startButton.style('border', 'none');
-  startButton.mousePressed(startGame);
 }
 
 //sets randomize boxes
@@ -335,17 +316,20 @@ function mouseDragged() {
 function mouseReleased() {
   if (selectedBox) {
     const correctBin = getBinByLabel(selectedBox.label);
-    let placedInCorrectBin =
+
+    // Increase the size of the correct box area
+    const placedInCorrectBin =
       mouseX > correctBin.x &&
       mouseX < correctBin.x + 100 &&
       mouseY > correctBin.y &&
-      mouseY < correctBin.y + 100;
-    
+      mouseY < correctBin.y + 3000;
+
+    // Increase the size of the any box area
     const placedInAnyBin =
       mouseX > bins.compost.x &&
-      mouseX < bins.disposal.x + 100 &&
+      mouseX < bins.disposal.x + 100 && 
       mouseY > bins.compost.y &&
-      mouseY < bins.disposal.y + 100;
+      mouseY < bins.disposal.y + 3000; 
 
     if (placedInCorrectBin) {
       if (selectedBox.bin === correctBin) {
@@ -355,7 +339,7 @@ function mouseReleased() {
       // wrong bin
       score -= 10;
     } else {
-      // If not placed in any bin, do not increase currentBoxIndex
+      // if not placed in any bin, do not increase currentBoxIndex
       selectedBox = null;
       return;
     }
@@ -364,7 +348,7 @@ function mouseReleased() {
     boxes = boxes.filter((b) => b !== selectedBox);
     selectedBox = null;
 
-    // Increase currentBoxIndex only when placed in any bin
+    // increase currentBoxIndex only when placed in any bin
     if (placedInAnyBin) {
       currentBoxIndex++;
     }
